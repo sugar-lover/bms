@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sugarlove.bms.dao.BookBorrowHistoryDao">
+  <resultMap id="BaseResultMap" type="com.sugarlove.bms.entity.BookBorrowHistory">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="book_id" jdbcType="VARCHAR" property="bookId" />
+    <result column="operation_type" jdbcType="VARCHAR" property="operationType" />
+    <result column="maketime" jdbcType="TIMESTAMP" property="maketime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, book_id, operation_type, maketime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from book_borrow_history
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from book_borrow_history
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.sugarlove.bms.entity.BookBorrowHistory" useGeneratedKeys="true">
+    insert into book_borrow_history (user_id, book_id, operation_type, 
+      maketime)
+    values (#{userId,jdbcType=VARCHAR}, #{bookId,jdbcType=VARCHAR}, #{operationType,jdbcType=VARCHAR}, 
+      #{maketime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.sugarlove.bms.entity.BookBorrowHistory" useGeneratedKeys="true">
+    insert into book_borrow_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="bookId != null">
+        book_id,
+      </if>
+      <if test="operationType != null">
+        operation_type,
+      </if>
+      <if test="maketime != null">
+        maketime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="bookId != null">
+        #{bookId,jdbcType=VARCHAR},
+      </if>
+      <if test="operationType != null">
+        #{operationType,jdbcType=VARCHAR},
+      </if>
+      <if test="maketime != null">
+        #{maketime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sugarlove.bms.entity.BookBorrowHistory">
+    update book_borrow_history
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="bookId != null">
+        book_id = #{bookId,jdbcType=VARCHAR},
+      </if>
+      <if test="operationType != null">
+        operation_type = #{operationType,jdbcType=VARCHAR},
+      </if>
+      <if test="maketime != null">
+        maketime = #{maketime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sugarlove.bms.entity.BookBorrowHistory">
+    update book_borrow_history
+    set user_id = #{userId,jdbcType=VARCHAR},
+      book_id = #{bookId,jdbcType=VARCHAR},
+      operation_type = #{operationType,jdbcType=VARCHAR},
+      maketime = #{maketime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
